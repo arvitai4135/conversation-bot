@@ -36,15 +36,18 @@ jobs:
         script: |
           cd /www/wwwroot/inhouse_project/
 
-          if [ ! -d ".git" ]; then
-            echo "Cloning repository into current directory..."
-            git clone https://github.com/arvitai4135/conversation-bot.git .
+          if [ ! -d "conversation-bot" ]; then
+            echo "Cloning repository..."
+            git clone https://github.com/arvitai4135/conversation-bot.git
           else
-            echo "Pulling latest changes..."
+            echo "Repository already exists. Pulling latest changes..."
+            cd conversation-bot
             git pull origin main
           fi
 
-          echo "${{ secrets.ENV_CONTENT }}" > .env
+          cd conversation-bot
+
+          echo "${{ secrets.ENV_CONTENT }}" | sed 's/ *= */=/g' > .env
 
           echo "Building Docker image..."
           docker build -t flask-conversation-bot .
@@ -59,3 +62,4 @@ jobs:
             -p 5051:5051 \
             --env-file .env \
             flask-conversation-bot
+
