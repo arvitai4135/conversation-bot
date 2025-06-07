@@ -4,3 +4,4 @@ langchain
 google-generativeai
 langchain_community
 pytest
+langchain_google_genai
