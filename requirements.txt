@@ -1,0 +1,6 @@
+# Placeholder for requirements.txt
+Flask
+langchain
+google-generativeai
+langchain_community
+pytest
